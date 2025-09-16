@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Квитанция — RideNow</title>
+<style>
+  :root{
+    --ink:#eaf2ff; --muted:#a6b5cc; --stroke:rgba(255,255,255,.18);
+    --glass1:rgba(255,255,255,.10); --glass2:rgba(255,255,255,.06);
+    --g1:#b7a7ff; --g2:#8bd6c9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#0b0f12;color:var(--ink);font-family:Inter,system-ui,Arial}
+  .bg:before{
+    content:"";position:fixed;inset:0;z-index:-1;
+    background:
+      radial-gradient(60% 55% at 18% 10%, rgba(183,167,255,.22), transparent 60%),
+      radial-gradient(60% 55% at 82% 88%, rgba(139,214,201,.20), transparent 60%),
+      linear-gradient(#0b0f12,#0b0f12);
+    filter:saturate(120%);
+  }
+
+  .wrap{width:min(880px,96vw);margin:24px auto}
+  .card{border-radius:22px;border:1px solid var(--stroke);
+    background:linear-gradient(180deg,var(--glass1),var(--glass2));
+    box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
+    backdrop-filter:blur(14px) saturate(140%); overflow:hidden}
+  .inner{padding:18px}
+  .brand{display:flex;gap:8px;align-items:center;font-weight:900}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,#9de9d7,#b7a7ff)}
+  h1{margin:8px 0 14px;font-size:28px}
+
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .btn{height:40px;border-radius:12px;border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+    color:var(--ink);font-weight:800;padding:0 12px;cursor:pointer}
+  .btn.pri{border:0;color:#0b0f12;background:linear-gradient(90deg,var(--g1),var(--g2))}
+  .btn.ghost{opacity:.9}
+
+  .row{display:grid;grid-template-columns:1.2fr .8fr;gap:12px}
+  @media (max-width:720px){ .row{grid-template-columns:1fr} }
+
+  .block{border:1px solid var(--stroke);border-radius:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06)); padding:12px}
+  .title{font-weight:900;margin-bottom:6px}
+  .muted{color:var(--muted)}
+  .pair{display:flex;justify-content:space-between;gap:12px;margin:6px 0}
+  .pair .l{color:var(--muted)}
+  .total{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    border-radius:14px;border:1px solid var(--stroke); padding:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); font-weight:900}
+  .pill{font-weight:900;color:#0b0f12;border-radius:12px;padding:6px 12px;
+    background:linear-gradient(90deg,#b7ffa3,#84ffd7)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:520px){ .grid2{grid-template-columns:1fr} }
+
+  .driver{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+  .ava{width:44px;height:44px;border-radius:50%;overflow:hidden;background:#2a3340;border:1px solid var(--stroke)}
+  .ava img{width:100%;height:100%;object-fit:cover}
+  .ver{font-size:12px;padding:2px 6px;border-radius:8px;margin-left:6px;
+    background:linear-gradient(90deg,var(--g2),var(--g1)); color:#0b0f12;font-weight:800}
+
+  .qr{width:120px;height:120px;border-radius:12px;border:1px solid var(--stroke);
+    background:repeating-linear-gradient(45deg, rgba(255,255,255,.2) 0 6px, transparent 6px 12px)}
+  .foot{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:10px}
+  .small{font-size:12px;color:var(--muted)}
+
+  /* print */
+  @media print{
+    body{background:#fff}
+    .bg:before{display:none}
+    .toolbar{display:none}
+    .wrap{width:100%;margin:0}
+    .card{box-shadow:none;border:0;border-radius:0}
+  }
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:50;
+    padding:10px 14px;border-radius:12px;border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.10));display:none}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="wrap">
+  <div class="toolbar">
+    <button class="btn pri" id="printBtn">Скачать PDF</button><button class="btn" id="sendBtn">Отправить на email</button>
+    <button class="btn ghost" onclick="history.back()">← Назад</button>
+  </div>
+
+  <section class="card">
+    <div class="inner">
+      <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+      <h1>Квитанция</h1>
+
+      <div class="row">
+        <!-- ЛЕВАЯ КОЛОНКА -->
+        <div class="col">
+          <div class="block">
+            <div class="title">Маршрут</div>
+            <div class="pair"><div class="l">Откуда → Куда</div><div>Киев → Одесса</div></div>
+            <div class="pair"><div class="l">Дата и время</div><div>сегодня, 08:30 → 15:00</div></div>
+            <div class="pair"><div class="l">Дистанция</div><div>475 км</div></div>
+            <div class="pair"><div class="l">Пассажир</div><div>Александр (1 место)</div></div>
+          </div>
+
+          <div class="block" style="margin-top:10px">
+            <div class="title">Водитель</div>
+            <div class="driver">
+              <div class="ava"><img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=200" alt=""></div>
+              <div>
+                <div style="font-weight:900">Павел <span class="ver">проверен</span></div>
+                <div class="muted">Toyota Camry · AA1234BB · ★★★★★</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="block" style="margin-top:10px">
+            <div class="title">Итого поездки</div>
+            <div class="pair"><div class="l">Билет</div><div>550 ₴</div></div>
+            <div class="pair"><div class="l">Доплата за заезд</div><div>+100 ₴</div></div>
+            <div class="pair"><div class="l">Скидка/промокод</div><div>−0 ₴</div></div>
+            <div class="total" style="margin-top:8px">
+              <div>К оплате</div>
+              <div class="pill" id="totalPay">670 ₴</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА -->
+        <div class="col">
+          <div class="block">
+            <div class="title">Оплата</div>
+            <div class="pair"><div class="l">Способ</div><div>Карта **** 1234</div></div>
+            <div class="pair"><div class="l">Статус</div><div>оплачено</div></div>
+            <div class="pair"><div class="l">Комиссия сервиса</div><div>0 ₴ (акция)</div></div>
+          </div>
+
+          <div class="grid2" style="margin-top:10px">
+            <div class="block">
+              <div class="title">Сведения</div>
+              <div class="small">
+                № заказа: RN-2025-0907-001<br/>
+                Дата выдачи: сегодня<br/>
+                Клиент: Александр
+              </div>
+            </div>
+            <div class="block" style="display:flex;align-items:center;justify-content:center">
+              <div class="qr" aria-label="QR (демо)"></div>
+            </div>
+          </div>
+
+          <div class="block" style="margin-top:10px">
+            <div class="title">Реквизиты сервиса</div>
+            <div class="small">
+              RideNow UA, ФОП «Пример», ІПН 1234567890<br/>
+              support@ridenow.ua · +380 44 000 00 00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div class="small">Спасибо, что выбрали RideNow! Квитанция не является фискальным чеком.</div>
+        <div class="small">© 2025 RideNow</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast">Отправлено на email (демо)</div>
+
+<script>
+  document.getElementById('printBtn').onclick = ()=> window.print();
+  document.getElementById('sendBtn').onclick = ()=>{
+    const t=document.getElementById('toast');
+    t.style.display='block'; clearTimeout(t._tmr);
+    t._tmr=setTimeout(()=>t.style.display='none',1600);
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <!-- без зума на iOS -->
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Регистрация — RideNow</title>
+  <style>
+    :root{
+      --glass-1: rgba(14,21,26,.55);
+      --glass-2: rgba(14,21,26,.35);
+      --ink:#f3f7ff; --muted:#c4ceda; --stroke:rgba(255,255,255,.18);
+      --accent:#ffb668; --accent-2:#9de9d7; --mint:#a8ffd8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      color:var(--ink);
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.55) 35%, rgba(0,0,0,.45) 60%, rgba(0,0,0,.55)),
+        url("image.png") center/cover no-repeat fixed;
+      -webkit-text-size-adjust:100%;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    .app{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:18px 12px 40px}
+    .card{
+      width:min(760px,96vw);
+      border-radius:22px; padding:16px;
+      background:linear-gradient(180deg,var(--glass-1),var(--glass-2));
+      border:1px solid var(--stroke);
+      box-shadow:0 24px 60px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.25);
+      backdrop-filter: blur(16px) saturate(140%);
+    }
+    .scroll{max-height:100%;overflow:auto}
+    .inner{max-width:640px;margin:0 auto}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:900;opacity:.95;margin-bottom:6px}
+    .brand .dot{width:8px;height:8px;border-radius:999px;background:#58e0ff;display:inline-block}
+    h1{margin:8px 0 14px;font-size:22px}
+
+    /* роль */
+    .role-tabs{display:flex;gap:8px;margin-bottom:12px}
+    .role-btn{
+      flex:1; padding:10px 12px; border-radius:12px; border:1px solid var(--stroke);
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      color:var(--ink); font-weight:800; cursor:pointer;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .role-btn.is-active{
+      border:none; color:#0b0f12;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      box-shadow:0 10px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6);
+    }
+
+    /* поля/кнопки */
+    .form{display:grid;gap:12px}
+    .field{display:grid;gap:6px}
+    .input{
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--stroke);
+      background:rgba(255,255,255,.08); color:var(--ink); font-weight:700;
+      font-size:16px; /* важное: без авто-зума */
+      outline:none;
+    }
+    .input:focus{box-shadow:0 0 0 2px rgba(255,255,255,.18) inset}
+    small{color:var(--muted)}
+    .cta{
+      margin-top:6px; padding:12px 16px; border:none; cursor:pointer; border-radius:14px; font-weight:900;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#0b0f12;
+      box-shadow:0 10px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6);
+    }
+    .helpers{color:var(--muted);font-size:14px}
+
+    /* фото профиля */
+    .profile-photo-wrapper{display:grid;place-items:center}
+    .profile-photo-label{
+      width:148px;height:148px;border-radius:999px;border:2px dashed rgba(255,255,255,.35);
+      display:grid;place-items:center;background-size:cover;background-position:center;
+      background-color:rgba(255,255,255,.06); color:#e9f2ff; font-weight:900;
+    }
+
+    /* пол */
+    .gender-buttons{display:flex;gap:8px}
+    .gender-btn{
+      flex:1;padding:10px 12px;border-radius:12px;border:1px solid var(--stroke);
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      color:var(--ink);font-weight:800;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)
+    }
+    .gender-btn.active{
+      border:none;color:#0b0f12;background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      box-shadow:0 10px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6)
+    }/* фото авто 2×2 */
+    .car-title{margin:8px 0 4px}
+    .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .photo-item{border:1px solid var(--stroke);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.05)}
+    .photo-head{padding:8px 10px;font-weight:800;border-bottom:1px solid rgba(255,255,255,.12)}
+    .photo-body{height:130px;display:grid;place-items:center}
+    .ph-box{width:100%;height:100%;background:rgba(255,255,255,.06);border-radius:6px}
+    .ph-preview{width:100%;height:100%;object-fit:cover;border-radius:6px}
+
+    /* bottom-sheet */
+    .rn-sheet{position:fixed;inset:0;display:none;align-items:flex-end;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);z-index:999}
+    .rn-sheet.is-open{display:flex}
+    .rn-card{width:100%;background:linear-gradient(180deg,var(--glass-1),var(--glass-2));border-top-left-radius:16px;border-top-right-radius:16px;border:1px solid var(--stroke);padding:12px}
+    .rn-date-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+    .rn-date-grid select{padding:10px 12px;border-radius:10px;border:1px solid var(--stroke);background:rgba(255,255,255,.08);color:var(--ink);font-size:16px}
+    .rn-actions{display:flex;gap:8px;justify-content:flex-end}
+    .rn-btn{padding:10px 14px;border-radius:10px;border:1px solid var(--stroke);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));color:var(--ink);font-weight:800}
+    .rn-btn.ok{border:none;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0f12}
+
+    .bottom{margin-top:8px;color:var(--muted);text-align:center}
+    a{color:#ffd59b;text-decoration:none}
+  </style>
+</head>
+<body>
+
+<main class="app">
+  <section class="card" role="dialog" aria-labelledby="title">
+    <div class="scroll">
+      <div class="inner">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 id="title">Создать аккаунт</h1>
+
+        <!-- Выбор роли -->
+        <nav class="role-tabs" aria-label="Выбор роли">
+          <button class="role-btn is-active" type="button" data-role="passenger">Я пассажир</button>
+          <button class="role-btn" type="button" data-role="driver">Я водитель</button>
+        </nav>
+
+        <!-- Форма -->
+        <form id="registerForm" class="form" enctype="multipart/form-data">
+
+          <!-- Фото профиля -->
+          <div class="profile-photo-wrapper">
+            <input type="file" id="profile-photo" accept="image/*" hidden>
+            <label for="profile-photo" class="profile-photo-label">
+              <span id="profile-text">Загрузите фото</span>
+            </label>
+          </div>
+
+          <!-- ФИО -->
+          <label class="field">Фамилия Имя <small>(будет отображаться только имя)</small>
+            <input id="fullName" type="text" class="input" placeholder="Иван Иванов" required autocomplete="name">
+          </label>
+
+          <!-- Email -->
+          <label class="field">Email
+            <input id="email" type="email" class="input" placeholder="email@example.com" required autocomplete="email" inputmode="email">
+          </label>
+
+          <!-- Телефон -->
+          <label class="field">Телефон
+            <input id="phone" type="tel" class="input" placeholder="+380XXXXXXXXX" required autocomplete="tel" inputmode="tel">
+          </label>
+
+          <!-- Пароли -->
+          <label class="field">Пароль
+            <input id="pass" type="password" class="input" placeholder="Введите пароль" required>
+          </label>
+          <label class="field">Подтверждение пароля
+            <input id="pass2" type="password" class="input" placeholder="Повторите пароль" required>
+          </label>
+
+          <!-- Дата рождения (bottom-sheet) -->
+          <label class="field">Дата рождения
+            <input id="birthdate" type="text" class="input modern-date" placeholder="ДД.ММ.ГГГГ" readonly required>
+          </label>
+
+          <!-- Пол -->
+          <div class="field">
+            <span>Пол</span>
+            <div class="gender-buttons"><button type="button" id="male" class="gender-btn male">Мужчина</button>
+              <button type="button" id="female" class="gender-btn female">Женщина</button>
+            </div>
+            <input type="hidden" name="gender" id="gender" value="">
+          </div>
+
+          <!-- Город -->
+          <label class="field">Город проживания
+            <input id="city" type="text" class="input" placeholder="Киев" required autocomplete="address-level2">
+          </label>
+
+          <!-- Поля для водителей -->
+          <div id="driverFields" style="display:none;">
+            <h2 class="car-title">Данные автомобиля</h2>
+            <label class="field">Марка автомобиля
+              <input id="carBrand" type="text" class="input" placeholder="Toyota">
+            </label>
+            <label class="field">Модель
+              <input id="carModel" type="text" class="input" placeholder="Camry">
+            </label>
+            <label class="field">Год выпуска
+              <input id="carYear" type="number" class="input" placeholder="2020" inputmode="numeric" pattern="[0-9]*">
+            </label>
+            <label class="field">Цвет
+              <input id="carColor" type="text" class="input" placeholder="Черный">
+            </label>
+            <label class="field">Гос. номер
+              <input id="carPlate" type="text" class="input" placeholder="АА1234ВС">
+            </label>
+
+            <!-- фото авто (2×2) -->
+            <div class="photo-grid">
+              <div class="photo-item">
+                <div class="photo-head">Лицевая сторона</div>
+                <div class="photo-body"><div id="phFront" class="ph-box"></div></div>
+                <input id="fileFront" type="file" accept="image/*" hidden>
+              </div>
+
+              <div class="photo-item">
+                <div class="photo-head">Багажник</div>
+                <div class="photo-body"><div id="phTrunk" class="ph-box"></div></div>
+                <input id="fileTrunk" type="file" accept="image/*" hidden>
+              </div>
+
+              <div class="photo-item">
+                <div class="photo-head">Переднее сиденье</div>
+                <div class="photo-body"><div id="phFrontSeats" class="ph-box"></div></div>
+                <input id="fileFrontSeats" type="file" accept="image/*" hidden>
+              </div>
+
+              <div class="photo-item">
+                <div class="photo-head">Заднее сиденье</div>
+                <div class="photo-body"><div id="phRearSeats" class="ph-box"></div></div>
+                <input id="fileRearSeats" type="file" accept="image/*" hidden>
+              </div>
+            </div>
+          </div>
+
+          <!-- Согласие -->
+          <div class="helpers">
+            <label><input type="checkbox" required> Принимаю правила сервиса</label>
+          </div>
+
+          <!-- Кнопка -->
+          <button class="cta" type="submit">Создать аккаунт</button>
+        </form>
+
+        <div class="bottom">Уже есть аккаунт? <a href="index.html">Войти</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- bottom-sheet календарь -->
+<div class="rn-sheet" id="rnDateSheet" aria-hidden="true">
+  <div class="rn-card">
+    <div style="text-align:center;font-weight:800;margin-bottom:8px">Выберите дату</div>
+    <div class="rn-date-grid">
+      <select id="rnDay"></select>
+      <select id="rnMonth"></select>
+      <select id="rnYear"></select>
+    </div>
+    <div class="rn-actions">
+      <button class="rn-btn cancel" id="rnCancel">Отмена</button>
+      <button class="rn-btn ok" id="rnOk">Готово</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==== выбор роли ==== */
+const roleButtons = document.querySelectorAll('.role-btn');
+const driverFields = document.getElementById('driverFields');
+let selectedRole = 'passenger';
+roleButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    roleButtons.forEach(b=>b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    selectedRole = btn.dataset.role;
+    driverFields.style.display = selectedRole === 'driver' ? 'block' : 'none';
+  });
+});/* ==== фото профиля ==== */
+const profileInput = document.getElementById('profile-photo');
+const profileLabel = document.querySelector('.profile-photo-label');
+const profileText = document.getElementById('profile-text');
+profileLabel.addEventListener('click', ()=>{ try{ profileInput.value=''; }catch(e){} });
+profileInput.addEventListener('change',e=>{
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    profileLabel.style.backgroundImage = `url(${reader.result})`;
+    profileLabel.style.border = '3px solid var(--mint)';
+    profileText.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ==== пол ==== */
+const maleBtn = document.getElementById('male');
+const femaleBtn = document.getElementById('female');
+const genderInput = document.getElementById('gender');
+[maleBtn,femaleBtn].forEach(b=>{
+  b.addEventListener('click',()=>{
+    maleBtn.classList.remove('active');
+    femaleBtn.classList.remove('active');
+    b.classList.add('active');
+    genderInput.value = b === maleBtn ? 'male' : 'female';
+  });
+});
+
+/* ==== фото авто (клик по блоку -> выбор файла -> превью) ==== */
+const photoSlots = [
+  { box:'#phFront',       input:'#fileFront',       key:'front' },
+  { box:'#phTrunk',       input:'#fileTrunk',       key:'trunk' },
+  { box:'#phFrontSeats',  input:'#fileFrontSeats',  key:'frontSeats' },
+  { box:'#phRearSeats',   input:'#fileRearSeats',   key:'rearSeats' },
+];
+photoSlots.forEach(({box,input})=>{
+  const boxEl = document.querySelector(box);
+  const inpEl = document.querySelector(input);
+  if (!boxEl || !inpEl) return;
+
+  const resetValue = ()=>{ try{ inpEl.value=''; }catch(e){} };
+  boxEl.addEventListener('mousedown', resetValue, {capture:true});
+  boxEl.addEventListener('touchstart', resetValue, {capture:true, passive:true});
+
+  boxEl.addEventListener('click', ()=> inpEl.click());
+
+  inpEl.addEventListener('change', ()=>{
+    const file = inpEl.files && inpEl.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      let img = boxEl.querySelector('img.ph-preview');
+      if (!img){
+        img = document.createElement('img');
+        img.className = 'ph-preview';
+        boxEl.innerHTML = '';
+        boxEl.appendChild(img);
+      }
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+/* ==== bottom-sheet календарь ==== */
+const birthInput = document.getElementById('birthdate');
+const sheet = document.getElementById('rnDateSheet');
+const selDay = document.getElementById('rnDay');
+const selMonth = document.getElementById('rnMonth');
+const selYear = document.getElementById('rnYear');
+const btnOk = document.getElementById('rnOk');
+const btnCancel = document.getElementById('rnCancel');
+
+function openSheet(){ sheet.classList.add('is-open'); sheet.setAttribute('aria-hidden','false'); }
+function closeSheet(){ sheet.classList.remove('is-open'); sheet.setAttribute('aria-hidden','true'); }
+function pad(n){ return n<10 ? '0'+n : ''+n; }
+
+(function initDate(){
+  const now = new Date();
+  const yMax = now.getFullYear(), yMin = yMax - 85;
+  for (let y = yMax; y >= yMin; y--) { const o=document.createElement('option'); o.value=y; o.textContent=y; selYear.appendChild(o); }
+  for (let m=1; m<=12; m++) { const o=document.createElement('option'); o.value=m; o.textContent=pad(m); selMonth.appendChild(o); }
+  function fillDays(){
+    const y = Number(selYear.value || yMax); const m = Number(selMonth.value || 1);
+    const days = new Date(y, m, 0).getDate();
+    selDay.innerHTML='';
+    for (let d=1; d<=days; d++){ const o=document.createElement('option'); o.value=d; o.textContent=pad(d); selDay.appendChild(o); }
+  }
+  selYear.addEventListener('change', fillDays);
+  selMonth.addEventListener('change', fillDays);
+  fillDays();
+})();
+
+if (birthInput){
+  birthInput.addEventListener('click', openSheet);
+  birthInput.addEventListener('focus', (e)=>{ e.preventDefault(); openSheet(); birthInput.blur(); });
+}
+btnCancel.addEventListener('click', closeSheet);
+btnOk.addEventListener('click', ()=>{const y = selYear.value, m = pad(Number(selMonth.value)), d = pad(Number(selDay.value));
+  birthInput.value = `${d}.${m}.${y}`;
+  birthInput.dataset.iso = `${y}-${m}-${d}`;
+  closeSheet();
+});
+sheet.addEventListener('click', (e)=>{ if (e.target===sheet) closeSheet(); });
+
+/* ==== утилиты ==== */
+function showToast(msg, ms=1500){
+  let t = document.getElementById('toast');
+  if (!t){
+    t = document.createElement('div');
+    t.id='toast';
+    Object.assign(t.style,{
+      position:'fixed',left:'50%',bottom:'80px',transform:'translateX(-50%)',
+      padding:'10px 14px',borderRadius:'12px',zIndex:9999,
+      border:'1px solid var(--stroke)',
+      background:'linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03))',
+      backdropFilter:'blur(12px) saturate(140%)',boxShadow:'0 10px 30px rgba(0,0,0,.35)',
+      color:'var(--ink)',fontWeight:'800'
+    });
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity='1';
+  setTimeout(()=>{ t.style.opacity='0'; }, ms);
+}
+async function fileToDataURL(file) {
+  if (!file) return null;
+  const reader = new FileReader();
+  return await new Promise(res => { reader.onload = () => res(reader.result); reader.readAsDataURL(file); });
+}
+
+/* ==== submit ==== */
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (document.getElementById('pass').value !== document.getElementById('pass2').value) {
+    showToast('Пароли не совпадают', 1600);
+    return;
+  }
+
+  const profile = {
+    role: (document.querySelector('.role-btn.is-active')?.dataset.role) || 'passenger',
+    fullName: document.getElementById('fullName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    birthDisplay: document.getElementById('birthdate').value,
+    birthISO: document.getElementById('birthdate').dataset.iso || null,
+    gender: document.getElementById('gender').value || null,
+    city: document.getElementById('city').value.trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  const profFile = document.getElementById('profile-photo').files[0];
+  profile.profilePhoto = await fileToDataURL(profFile);
+
+  if (profile.role === 'driver') {
+    const files = {
+      front:       document.getElementById('fileFront').files[0],
+      trunk:       document.getElementById('fileTrunk').files[0],
+      frontSeats:  document.getElementById('fileFrontSeats').files[0],
+      rearSeats:   document.getElementById('fileRearSeats').files[0],
+    };
+
+    profile.vehicle = {
+      brand: document.getElementById('carBrand').value.trim(),
+      model: document.getElementById('carModel').value.trim(),
+      year:  document.getElementById('carYear').value.trim(),
+      color: document.getElementById('carColor').value.trim(),
+      plate: document.getElementById('carPlate').value.trim(),
+      photos: {
+        front:       await fileToDataURL(files.front),
+        trunk:       await fileToDataURL(files.trunk),
+        frontSeats:  await fileToDataURL(files.frontSeats),
+        rearSeats:   await fileToDataURL(files.rearSeats),
+      }
+    };
+  }
+
+  try {
+    localStorage.setItem('ridenow_profile', JSON.stringify(profile));
+  } catch (err) {
+    showToast('Слишком большие фото — уменьшите размер', 1800);
+    return;
+  }
+
+  showToast('Аккаунт создан');
+  const target = profile.role === 'driver' ? 'profile-driver.html' : 'profile-passenger.html';
+  setTimeout(() => { window.location.href = target; }, 350);
+});
+</script>
+</body>
+</html>

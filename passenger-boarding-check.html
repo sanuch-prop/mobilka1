@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>Проверка посадки — RideNow</title>
+<style>
+  :root{
+    --ink:#eaf2ff; --muted:#a6b5cc; --stroke:rgba(255,255,255,.18);
+    --glass-1:rgba(14,21,26,.55); --glass-2:rgba(14,21,26,.35);
+    --g1:#ffb668; --g2:#9de9d7; --nav-h:74px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    color:var(--ink);
+    font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.55) 35%, rgba(0,0,0,.45) 60%, rgba(0,0,0,.55)),
+      url("image.png") center/cover no-repeat fixed;
+    -webkit-text-size-adjust:100%;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding:16px;
+    padding-bottom:calc(16px + env(safe-area-inset-bottom) + var(--nav-h));
+  }
+
+  .card{
+    width:min(760px,96vw);
+    margin:0 auto;
+    border-radius:22px;
+    border:1px solid var(--stroke);
+    background:linear-gradient(180deg,var(--glass-1),var(--glass-2));
+    box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
+    backdrop-filter: blur(16px) saturate(140%);
+  }
+  .inner{ padding:16px 16px 22px }
+
+  .brand{ font-weight:900; letter-spacing:.2px; display:flex; gap:8px; align-items:center; opacity:.95}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:#58e0ff;display:inline-block}
+  h1{ margin:8px 0 12px; font-size:26px; letter-spacing:.2px }
+
+  .block{
+    margin:12px 0; padding:12px; border-radius:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+    border:1px solid var(--stroke);
+  }
+  .row{display:flex; align-items:center; gap:12px; justify-content:space-between}
+  .sub{color:var(--muted)}
+  .pill{
+    padding:8px 12px; border-radius:12px; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+    font-weight:800;
+  }
+  .cta{
+    height:50px; border-radius:16px; width:100%; margin-top:8px; border:0; cursor:pointer;
+    color:#0b0f12; font-weight:900; font-size:18px; letter-spacing:.2px;
+    background:linear-gradient(90deg,var(--g1),var(--g2));
+    box-shadow:0 12px 28px rgba(0,0,0,.28);
+  }
+
+  /* ===== МОДАЛКИ (центр, не перекрывают навигацию) ===== */
+  .overlay{position:fixed; inset:0; display:none; place-items:center; z-index:60; padding:16px;
+    background:rgba(0,0,0,.35)}
+  .overlay.open{display:grid}
+  .sheet{
+    width:min(620px,94vw);
+    border-radius:18px; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(20,24,32,.92), rgba(20,24,32,.90));
+    box-shadow:0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.2);
+    backdrop-filter: blur(16px) saturate(160%);
+    padding:14px;
+    margin-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  }
+  .sheet h3{margin:6px 2px 10px}
+  .actions{display:flex; gap:10px}
+  .btn{flex:1; height:46px; border-radius:14px; border:1px solid var(--stroke);
+       background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); color:var(--ink); font-weight:800; cursor:pointer}
+  .btn.ok{border:0; color:#0b0f12; background:linear-gradient(90deg,var(--g1),var(--g2))}
+  .btn.bad{border-color:rgba(255,120,120,.45); color:#ffd6d6}
+
+  /* ===== НИЖНЯЯ НАВИГАЦИЯ (общая) ===== */
+  .bottom-shell{position:fixed; left:0; right:0; bottom:0; z-index:55; padding:10px 12px calc(10px + env(safe-area-inset-bottom)); display:grid; place-items:center}
+  .bottom-bar{display:flex; gap:10px; align-items:center; justify-content:space-between; padding:10px;
+    max-width:760px; width:100%; margin:0 auto; border-radius:18px;
+    background:linear-gradient(180deg,rgba(12,12,14,.78),rgba(12,12,14,.62));
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 18px 44px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.28);
+    backdrop-filter: blur(16px) saturate(160%);
+  }
+  .bn{flex:1; display:grid; justify-items:center; text-decoration:none; color:#e8eef9}
+  .bn .ico{font-size:18px; margin-bottom:4px}
+  .bn .txt{font-size:12px; color:#cbd4e6; font-weight:800}
+  .bn.active{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06)); border-radius:12px}
+  .bn.active .txt{color:#ffd59b}
+
+  /* маленькие элементы */
+  .label{font-weight:900; margin-bottom:6px}
+  .count{font-weight:900}
+  .reason-list{display:grid; gap:8px; margin:8px 0}
+  .reason{display:flex; gap:10px; align-items:center;
+          padding:10px 12px; border-radius:12px; border:1px solid var(--stroke);
+          background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05))}
+  textarea{width:100%; min-height:72px; resize:vertical; border-radius:10px; border:1px solid var(--stroke);
+           background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); color:var(--ink); padding:8px}
+</style>
+</head>
+<body>
+
+<main class="card">
+  <div class="inner">
+    <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+    <h1>Проверка посадки</h1>
+
+    <div class="block">
+      <div class="label">Посадка запланирована:</div>
+      <div class="row">
+        <div>
+          <div class="sub">время</div>
+          <div class="pill" id="dep">—:—</div>
+        </div>
+        <div>
+          <div class="sub">напоминание через</div>
+          <div class="pill"><span id="left" class="count">—:—</span></div>
+        </div>
+      </div>
+      <button class="cta" id="demoSoon">Показать диалог (демо)</button>
+      <div class="sub" style="margin-top:6px">Уведомление появится через 30 минут после времени посадки — даже если приложение свёрнуто (при разрешённых уведомлениях).</div>
+    </div>
+
+    <div class="block">
+      <div class="label">Что дальше?</div>
+      <div class="sub">После подтверждения «Да, я в пути» откроется страница с живой поездкой (карта и оставшееся время). Если нажать «Нет, не сел(а)» — сформируем тикет с причиной и вернём на страницу подтверждённой поездки.</div>
+    </div>
+  </div>
+</main>
+
+<!-- Диалог подтверждения -->
+<div class="overlay" id="checkDlg" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="checkTitle">
+    <h3 id="checkTitle">Вы в поездке?</h3>
+    <p class="sub" id="checkHint">Прошло 30 минут с момента посадки.</p>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn ok" id="btnYes">Да, я в пути</button>
+      <button class="btn bad" id="btnNo">Нет, не сел(а)</button>
+    </div>
+  </div>
+</div>
+
+<!-- Сообщение «Хорошей дороги» -->
+<div class="overlay" id="greetDlg" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <h3>Отличного пути!</h3>
+    <p class="sub">Пусть дорога идёт легко, плейлист попадает в настроение, а навигатор — без сюрпризов.</p>
+    <div class="actions" style="margin-top:10px">
+      <a class="btn ok" href="trip-ongoing-passenger.html">Открыть поездку</a>
+    </div>
+  </div>
+</div>
+
+<!-- Тикет причины -->
+<div class="overlay" id="reasonDlg" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <h3>Почему не сели?</h3>
+    <div class="reason-list">
+      <label class="reason"><input type="radio" name="r" value="late"> Задержался(ась)</label>
+      <label class="reason"><input type="radio" name="r" value="missed"> Не нашёл(а) водителя</label>
+      <label class="reason"><input type="radio" name="r" value="change"> Поменялись планы</label>
+      <label class="reason"><input type="radio" name="r" value="other"> Другое</label>
+    </div>
+    <textarea id="details" placeholder="Комментарий (необязательно)"></textarea>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn" onclick="closeDlg('reasonDlg')">Отмена</button>
+      <button class="btn ok" id="sendReason">Отправить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Навигация -->
+<nav class="bottom-shell" aria-label="Навигация">
+  <div class="bottom-bar">
+    <a class="bn" href="profile-passenger.html"><div class="ico">👤</div><div class="txt">Профиль</div></a><a class="bn" href="wallet-passenger.html"><div class="ico">💳</div><div class="txt">Кошелёк</div></a>
+    <a class="bn active" href="trip.html?active=1"><div class="ico">🚗</div><div class="txt">Актуальная</div></a>
+    <a class="bn" href="main-passenger.html"><div class="ico">🔍</div><div class="txt">Поиск</div></a>
+  </div>
+</nav>
+
+<script>
+  // ===== ПАРАМЕТРЫ: время посадки берём из query ?board=ISO, иначе демо +1 мин
+  const qs = new URLSearchParams(location.search);
+  const boardIso = qs.get('board');
+  const boardTime = boardIso ? new Date(boardIso) : new Date(Date.now() + 60*1000);
+  const remindAt  = new Date(boardTime.getTime() + 30*60*1000);
+
+  // UI элементы
+  const depEl = document.getElementById('dep');
+  const leftEl = document.getElementById('left');
+  const checkDlg = document.getElementById('checkDlg');
+  const greetDlg = document.getElementById('greetDlg');
+  const reasonDlg = document.getElementById('reasonDlg');
+
+  depEl.textContent = boardTime.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+
+  // ===== обратный отсчёт до показа диалога
+  function tick(){
+    const now = new Date();
+    const ms = remindAt - now;
+    if (ms <= 0){ showCheck(); return; }
+    const m = Math.floor(ms/60000), s = Math.floor(ms/1000)%60;
+    leftEl.textContent =` ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // ===== локальное уведомление (если разрешено)
+  if ('Notification' in window){
+    if (Notification.permission === 'default'){
+      // не навязчиво просим доступ
+      setTimeout(()=> Notification.requestPermission().catch(()=>{}), 1200);
+    }
+  }
+  function pushNotice(){
+    if ('Notification' in window && Notification.permission === 'granted'){
+      try{
+        const n = new Notification('RideNow — проверка посадки', {
+          body:'Вы в поездке? Нажмите, чтобы подтвердить.',
+          icon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVQoU2NkYGD4z0AEYBxVSFQGEQ0wQhGqwRjGQYgA7cQAA1o0iV8Ww3qQAAAABJRU5ErkJggg=='
+        });
+        n.onclick = ()=>{ window.focus(); showCheck(); n.close(); };
+      }catch(e){}
+    }
+  }
+
+  // ===== показ диалога
+  function showCheck(){
+    checkDlg.classList.add('open');
+    pushNotice();
+  }
+  function closeDlg(id){ document.getElementById(id).classList.remove('open'); }
+
+  // DEMO-кнопка
+  document.getElementById('demoSoon').onclick = showCheck;
+
+  // «Да, в пути»
+  document.getElementById('btnYes').onclick = ()=>{
+    checkDlg.classList.remove('open');
+    greetDlg.classList.add('open');
+    // можно логировать отметку о посадке
+    try{ localStorage.setItem('ridenow_checkin', JSON.stringify({at:Date.now(), ok:true})); }catch(_){}
+  };
+
+  // «Нет, не сел(а)»
+  document.getElementById('btnNo').onclick = ()=>{
+    checkDlg.classList.remove('open');
+    reasonDlg.classList.add('open');
+  };
+
+  // Отправка причины
+  document.getElementById('sendReason').onclick = ()=>{
+    const v = (document.querySelector('input[name="r"]:checked')||{}).value || 'unspecified';
+    const d = document.getElementById('details').value.trim();
+    try{ localStorage.setItem('ridenow_no_board', JSON.stringify({at:Date.now(), reason:v, note:d})) }catch(_){}
+    // редирект на подтверждённую поездку
+    location.href = 'trip-confirmed.html';
+  };
+</script>
+</body>
+</html>
