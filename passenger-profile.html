@@ -1,144 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Профиль пассажира — RideNow</title>
+  <title>Профиль — RideNow</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    :root {
-      --ink:#eaf2ff; --muted:#a6b5cc; --stroke:rgba(255,255,255,.18);
-      --glass-1:rgba(14,21,26,.55); --glass-2:rgba(14,21,26,.35);
-      --g1:#ffb668; --g2:#9de9d7;
-    }
-
-    /* ===== ФОН ===== */
-    html, body {
-      margin: 0; padding: 0;
-      height: 100%; width: 100%;
-      font-family: system-ui, sans-serif;
-      color: var(--ink);
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.65)),
-        url("image.png") center/cover no-repeat fixed;
-    }
-
-    /* ===== КОНТЕЙНЕР ===== */
-    main {
-      flex: 1 0 auto;
-      padding: 20px;
-      padding-bottom: 100px; /* отступ под навигацию */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: var(--glass-1);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.5);
-      backdrop-filter: blur(12px);
-    }
-
-    h1 {
-      margin: 0 0 16px 0;
-      font-size: 22px;
-      text-align: center;
-    }
-
-    #avatarWrap {
-      width: 90px; height: 90px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      margin: 0 auto 10px auto;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 32px; font-weight: bold;
-    }
-
-    .progress {
-      margin: 12px 0;
-      height: 10px; border-radius: 999px;
-      background: rgba(255,255,255,0.2);
-      overflow: hidden;
-    }
-    .progress .bar {
-      height: 100%; width: 60%;
-      background: linear-gradient(90deg,var(--g1),var(--g2));
-    }
-
-    .kv {
-      display: flex; justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      font-size: 14px;
-    }
-    .k { opacity: 0.8; }
-    .v { font-weight: 600; }
-
-    /* ===== НИЖНЯЯ НАВИГАЦИЯ ===== */
-    .bottom-shell {
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      z-index: 1000;
-    }
-    .bottom-bar {
-      display: flex;
-      justify-content: space-around;
-      background: var(--glass-2);
-      border-radius: 20px 20px 0 0;
-      padding: 8px;
-      backdrop-filter: blur(12px);
-    }
-    .bn-tab {
-      flex: 1; text-align: center;
-      color: var(--ink);
-      font-size: 12px; text-decoration: none;
-      padding: 6px 0;
-    }
-    .bn-tab .ico { font-size: 18px; display: block; }
-    .bn-tab.active { color: var(--g1); }
-  </style>
+  <meta http-equiv="refresh" content="3;url=passenger-settings.html" />
 </head>
 <body>
-  <main>
-    <div class="card">
-      <h1>Профиль пассажира</h1>
-      <div id="avatarWrap">О</div>
-      <div style="text-align:center;font-size:18px;font-weight:700;">Александр</div>
-      <div style="text-align:center;margin:6px 0;color:var(--g2);font-weight:600;">Верифицирован</div>
-
-      <button style="display:block;margin:10px auto;padding:6px 14px;border-radius:8px;border:none;background:var(--g1);font-weight:700;cursor:pointer;">Изменить</button>
-
-      <div class="progress"><div class="bar"></div></div>
-
-      <div class="kv"><div class="k">Имя и фамилия</div><div class="v">Александр Домаев</div></div>
-      <div class="kv"><div class="k">Email</div><div class="v">gomenuk776@gmail.com</div></div>
-      <div class="kv"><div class="k">Телефон</div><div class="v">+380933260215</div></div>
-      <div class="kv"><div class="k">Город</div><div class="v">—</div></div>
-      <div class="kv"><div class="k">Дата рождения</div><div class="v">—</div></div>
-    </div>
+  <main class="page-shell">
+    <article class="page-card">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Профиль пассажира</h1>
+        <p class="page-subtitle">Переезд завершён</p>
+      </header>
+      <section class="redirect-card">
+        <p>Настройки профиля находятся в новом разделе настроек.</p>
+        <p class="text-muted">Мы перенаправим вас автоматически.</p>
+        <div class="button-group button-group--vertical">
+          <a class="button button--primary" href="passenger-settings.html">Перейти в настройки</a>
+          <a class="button button--ghost" href="passenger-home.html">Главная</a>
+        </div>
+      </section>
+    </article>
   </main>
-
-<!-- НИЖНЯЯ НАВИГАЦИЯ -->
-<nav class="bottom-shell">
-  <div class="bottom-bar">
-    <a class="bn-tab active" href="profile-passenger.html">
-      <div class="ico">👤</div>Профиль
-    </a>
-    <a class="bn-tab" href="wallet-passenger.html">
-      <div class="ico">💳</div>Кошелёк
-    </a>
-    <a class="bn-tab" href="trip-passenger.html">
-      <div class="ico">🚗</div>Актуальная
-    </a>
-    <a class="bn-tab" href="search-passenger.html">
-      <div class="ico">🔍</div>Поиск
-    </a>
-  </div>
-</nav>
 </body>
 </html>
