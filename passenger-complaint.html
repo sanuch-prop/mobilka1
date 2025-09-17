@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Жалоба на поездку — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <article class="page-card" id="complaintCard">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Сообщить о проблеме</h1>
+        <p class="page-subtitle" id="complaintSubtitle">Выберите поездку</p>
+      </header>
+
+      <section class="panel" id="complaintList" data-complaint-list>
+        <h2 class="section-title">Завершённые поездки</h2>
+        <div class="list" data-complaint-trips></div>
+        <p class="text-muted text-small">Выберите поездку, для которой хотите оставить жалобу.</p>
+      </section>
+
+      <section class="panel hidden" id="complaintFormWrap" data-complaint-form>
+        <h2 class="section-title">Жалоба на поездку</h2>
+        <p class="text-muted" id="complaintTripInfo">Поездка Одесса → Черновцы</p>
+        <form class="form" id="complaintForm" data-form="complaint" novalidate>
+          <div class="form-field">
+            <span class="form-label">Что произошло?</span>
+            <div class="radio-group">
+              <label class="radio-option" for="reason-delay">
+                <input type="radio" id="reason-delay" name="reason" value="delay" required />
+                <span>Водитель опоздал или не приехал</span>
+              </label>
+              <label class="radio-option" for="reason-payment">
+                <input type="radio" id="reason-payment" name="reason" value="payment" />
+                <span>Проблема с оплатой</span>
+              </label>
+              <label class="radio-option" for="reason-safety">
+                <input type="radio" id="reason-safety" name="reason" value="safety" />
+                <span>Нарушение безопасности</span>
+              </label>
+              <label class="radio-option" for="reason-other">
+                <input type="radio" id="reason-other" name="reason" value="other" />
+                <span>Другое</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="complaintComment">Комментарий</label>
+            <textarea id="complaintComment" placeholder="Опишите ситуацию"></textarea>
+          </div>
+          <div class="button-group">
+            <button class="button button--primary" type="submit">Отправить</button>
+            <a class="button button--ghost" href="passenger-orders.html#completed">Отменить</a>
+          </div>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  <div class="toast" id="complaintToast" role="status" aria-live="polite">Спасибо! Мы свяжемся с вами в течение 15 минут.</div>
+
+  <script src="ui.js"></script>
+</body>
+</html>

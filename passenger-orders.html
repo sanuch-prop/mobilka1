@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Мои поездки — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="has-bottom-nav">
+  <main class="page-shell">
+    <article class="page-card" aria-labelledby="ordersTitle">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title" id="ordersTitle">Мои поездки</h1>
+        <p class="page-subtitle">Следите за активными маршрутами и возвращайтесь к завершённым поездкам в один клик.</p>
+      </header>
+
+      <section class="panel panel--surface">
+        <div class="tabs" role="tablist" data-tabs="orders">
+          <button class="tabs__button" data-tab="active" aria-selected="true" type="button">Активные</button>
+          <button class="tabs__button" data-tab="completed" aria-selected="false" type="button">Завершённые</button>
+        </div>
+
+        <div class="space-top" data-panel="active">
+          <ul class="list" data-orders-list="active"></ul>
+          <p class="text-muted text-small hidden" data-empty="active">Пока нет активных поездок. Найдите маршрут на главной.</p>
+        </div>
+
+        <div class="space-top hidden" data-panel="completed">
+          <ul class="list" data-orders-list="completed"></ul>
+          <p class="text-muted text-small" data-empty="completed">Завершённые поездки доступны 90 дней, квитанции сохраняются в кошельке.</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Подсказки</h2>
+        <div class="list list--borderless">
+          <div class="list-item__body">
+            <div class="section-title">Поделиться поездкой</div>
+            <p class="text-muted">Ссылка появится в деталях поездки после подтверждения.</p>
+          </div>
+          <div class="list-item__body">
+            <div class="section-title">Нужна помощь?</div>
+            <p class="text-muted">Напишите в <a href="passenger-support.html">службу поддержки</a>, мы ответим в течение 5 минут.</p>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="bottom-nav__link" href="passenger-home.html">
+      <span class="bottom-nav__icon" aria-hidden="true">🏠</span>
+      <span class="bottom-nav__label">Главная</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-orders.html" aria-current="page">
+      <span class="bottom-nav__icon" aria-hidden="true">🧾</span>
+      <span class="bottom-nav__label">Заказы</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-wallet.html">
+      <span class="bottom-nav__icon" aria-hidden="true">💳</span>
+      <span class="bottom-nav__label">Кошелёк</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-settings.html">
+      <span class="bottom-nav__icon" aria-hidden="true">⚙️</span>
+      <span class="bottom-nav__label">Настройки</span>
+    </a>
+  </nav>
+
+  <script src="ui.js"></script>
+</body>
+</html>

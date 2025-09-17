@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Настройки — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="has-bottom-nav">
+  <main class="page-shell">
+    <article class="page-card">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Настройки</h1>
+        <p class="page-subtitle">Обновите профиль и предпочтения</p>
+      </header>
+
+      <section class="panel panel--surface">
+        <h2 class="section-title">Профиль</h2>
+        <div class="profile-row">
+          <span class="avatar avatar--medium" data-user-photo>
+            <span class="avatar__placeholder" data-avatar-initials>AK</span>
+          </span>
+          <div class="profile-row__details">
+            <div class="section-title" data-user-full-name>Алина Коваленко</div>
+            <p class="text-muted text-small">Телефон: <a data-user-phone-link href="tel:+380671234567"><span data-user-phone>+380 67 123 45 67</span></a></p>
+          </div>
+        </div>
+        <div class="summary-list">
+          <div class="summary-list__item"><span>Имя</span><strong><span data-user-first-name>Алина</span></strong></div>
+          <div class="summary-list__item"><span>Фамилия</span><strong><span data-user-last-name>Коваленко</span></strong></div>
+          <div class="summary-list__item"><span>Email</span><strong><span data-user-email>alina@example.com</span></strong></div>
+        </div>
+        <div class="panel__footer">
+          <a class="button button--ghost" href="mailto:support@ridenow.app">Обновить данные</a>
+          <a class="button button--ghost" href="passenger-privacy.html">Политика данных</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Уведомления</h2>
+        <div class="radio-group">
+          <label class="radio-option" for="notif-push">
+            <input type="checkbox" id="notif-push" checked />
+            <span>Push-уведомления о посадке и прибытии</span>
+          </label>
+          <label class="radio-option" for="notif-sms">
+            <input type="checkbox" id="notif-sms" />
+            <span>SMS при подтверждении поездки</span>
+          </label>
+          <label class="radio-option" for="notif-email">
+            <input type="checkbox" id="notif-email" checked />
+            <span>Квитанции и отчёты на email</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Предпочтения</h2>
+        <div class="radio-group">
+          <label class="radio-option" for="pref-music">
+            <input type="checkbox" id="pref-music" checked />
+            <span>Спокойная музыка</span>
+          </label>
+          <label class="radio-option" for="pref-air">
+            <input type="checkbox" id="pref-air" />
+            <span>Открывать окно только по запросу</span>
+          </label>
+          <label class="radio-option" for="pref-seat">
+            <input type="checkbox" id="pref-seat" />
+            <span>Предпочитаю переднее сиденье</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Безопасность</h2>
+        <div class="list">
+          <div class="list-item">
+            <div class="list-item__body">
+              <div class="list-item__title">Двухфакторная авторизация</div>
+              <div class="list-item__meta">Добавляет код подтверждения при входе</div>
+            </div>
+            <div class="list-item__actions">
+              <button class="button button--ghost button--pill" type="button" data-action="2fa">Включить</button>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="list-item__body">
+              <div class="list-item__title">Экстренный контакт</div>
+              <div class="list-item__meta">+380 93 987 65 43</div>
+            </div>
+            <div class="list-item__actions">
+              <button class="button button--ghost button--pill" type="button" data-action="contact">Изменить</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="bottom-nav__link" href="passenger-home.html">
+      <span class="bottom-nav__icon" aria-hidden="true">🏠</span>
+      <span class="bottom-nav__label">Главная</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-orders.html">
+      <span class="bottom-nav__icon" aria-hidden="true">🧾</span>
+      <span class="bottom-nav__label">Заказы</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-wallet.html">
+      <span class="bottom-nav__icon" aria-hidden="true">💳</span>
+      <span class="bottom-nav__label">Кошелёк</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-settings.html" aria-current="page">
+      <span class="bottom-nav__icon" aria-hidden="true">⚙️</span>
+      <span class="bottom-nav__label">Настройки</span>
+    </a>
+  </nav>
+
+  <div class="toast" id="settingsToast" role="status" aria-live="polite"></div>
+
+  <script src="ui.js"></script>
+</body>
+</html>

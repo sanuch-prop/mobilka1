@@ -1,0 +1,35 @@
+{
+  "passenger-home.html": {
+    "hasNav": true
+  },
+  "passenger-orders.html": {
+    "hasNav": true
+  },
+  "passenger-wallet.html": {
+    "hasNav": true
+  },
+  "passenger-settings.html": {
+    "hasNav": true
+  },
+  "passenger-order-details.html": {
+    "hasNav": false
+  },
+  "passenger-receipt.html": {
+    "hasNav": false
+  },
+  "passenger-review.html": {
+    "hasNav": false
+  },
+  "passenger-complaint.html": {
+    "hasNav": false
+  },
+  "passenger-terms.html": {
+    "hasNav": false
+  },
+  "passenger-privacy.html": {
+    "hasNav": false
+  },
+  "passenger-support.html": {
+    "hasNav": false
+  }
+}

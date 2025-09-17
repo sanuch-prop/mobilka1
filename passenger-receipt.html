@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Квитанция поездки — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <article class="page-card" aria-labelledby="receiptTitle">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title" id="receiptTitle">Квитанция поездки</h1>
+        <p class="page-subtitle" data-receipt-title>Заказ RN-9801</p>
+      </header>
+
+      <section class="panel panel--surface">
+        <h2 class="section-title">Детали поездки</h2>
+        <div class="summary-list" data-receipt-summary>
+          <div class="summary-list__item"><span>Маршрут</span><strong>Одесса → Черновцы</strong></div>
+          <div class="summary-list__item"><span>Дата</span><strong>08 сентября 2025</strong></div>
+          <div class="summary-list__item"><span>Водитель</span><strong>Ирина • Volkswagen Tiguan</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Расчёт стоимости</h2>
+        <table class="table">
+          <tbody data-receipt-breakdown>
+            <tr><td>Базовая стоимость поездки</td><td class="text-right">500 ₴</td></tr>
+            <tr><td>Дополнительный заезд</td><td class="text-right">100 ₴</td></tr>
+            <tr><td>Сервисный сбор RideNow</td><td class="text-right">25 ₴</td></tr>
+          </tbody>
+        </table>
+        <div class="receipt-total" data-receipt-total>К оплате водителю: 600 ₴</div>
+        <p class="text-muted text-small" data-receipt-note>Сервисный сбор 25 ₴ удержан в приложении и остаётся в кошельке.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">QR для оплаты</h2>
+        <p class="text-muted">Покажите QR-код водителю — сумма и номер заказа подтянутся автоматически.</p>
+        <div class="qr-box" aria-hidden="true">
+          <svg viewBox="0 0 120 120" role="img" aria-label="QR код">
+            <rect width="120" height="120" fill="#0b0f12" rx="12" />
+            <rect x="10" y="10" width="30" height="30" fill="#ffffff" />
+            <rect x="17" y="17" width="16" height="16" fill="#0b0f12" />
+            <rect x="80" y="10" width="30" height="30" fill="#ffffff" />
+            <rect x="87" y="17" width="16" height="16" fill="#0b0f12" />
+            <rect x="10" y="80" width="30" height="30" fill="#ffffff" />
+            <rect x="17" y="87" width="16" height="16" fill="#0b0f12" />
+            <rect x="45" y="45" width="15" height="15" fill="#ffffff" />
+            <rect x="65" y="45" width="10" height="10" fill="#ffffff" />
+            <rect x="45" y="65" width="10" height="10" fill="#ffffff" />
+            <rect x="75" y="65" width="15" height="15" fill="#ffffff" />
+            <rect x="60" y="75" width="8" height="8" fill="#ffffff" />
+          </svg>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="button-group">
+          <button class="button button--primary" type="button" data-action="pdf">Скачать PDF</button>
+          <button class="button button--ghost" type="button" data-action="email">Отправить на email</button>
+          <a class="button button--ghost" href="passenger-orders.html#completed">К завершённым поездкам</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <div class="toast" id="receiptToast" role="status" aria-live="polite"></div>
+
+  <script src="ui.js"></script>
+</body>
+</html>

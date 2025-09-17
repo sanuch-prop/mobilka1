@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Главная — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="has-bottom-nav">
+  <main class="page-shell">
+    <article class="page-card">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Главная</h1>
+        <p class="page-subtitle">Добро пожаловать, <span data-user-first-name>Алина</span>! Управляйте поездками и квитанциями в одном месте.</p>
+      </header>
+
+      <section class="panel panel--surface">
+        <h2 class="section-title">Ближайшая поездка</h2>
+        <p class="text-muted">16 сентября • Киев → Одесса • 1 место</p>
+        <div class="summary-list">
+          <div class="summary-list__item"><span>Отправление</span><strong>08:30, Киев (Дворец спорта)</strong></div>
+          <div class="summary-list__item"><span>Прибытие</span><strong>13:15, Одесса (Привоз)</strong></div>
+          <div class="summary-list__item"><span>Водитель</span><strong>Павел • Toyota Camry АХ 1023 НВ</strong></div>
+        </div>
+        <div class="panel__footer">
+          <a class="button button--primary" href="passenger-order-details.html?id=rn-1024">Подробнее</a>
+          <a class="button button--ghost" href="passenger-orders.html">Все поездки</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Поиск поездки</h2>
+        <form class="form" data-form="search" novalidate>
+          <div class="form-field">
+            <label class="form-label" for="search-from">Откуда</label>
+            <input class="input" id="search-from" name="from" placeholder="Киев" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="search-to">Куда</label>
+            <input class="input" id="search-to" name="to" placeholder="Одесса" />
+          </div>
+          <div class="grid grid--two">
+            <div class="form-field">
+              <label class="form-label" for="search-date">Дата</label>
+              <input class="input" id="search-date" type="date" name="date" />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="search-seats">Пассажиров</label>
+              <select class="input" id="search-seats" name="seats">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+          <div class="button-group">
+            <button class="button button--primary" type="submit">Найти поездку</button>
+            <a class="button button--ghost" href="passenger-support.html">Нужна помощь</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Рекомендуемые направления</h2>
+        <div class="tag-list">
+          <a class="tag" href="passenger-order-details.html?id=rn-2040">Киев → Львов • 480 ₴</a>
+          <a class="tag" href="passenger-order-details.html?id=rn-2041">Киев → Харьков • 510 ₴</a>
+          <a class="tag" href="passenger-order-details.html?id=rn-2042">Одесса → Черновцы • 620 ₴</a>
+          <a class="tag" href="passenger-order-details.html?id=rn-2043">Львов → Варшава • 780 ₴</a>
+        </div>
+        <p class="text-muted">Цены ориентировочные — уточняйте у водителя при бронировании.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Быстрые действия</h2>
+        <div class="card-grid card-grid--two">
+          <a class="card shadowed" href="passenger-wallet.html">
+            <div class="badge badge--muted">Бонусы</div>
+            <div class="section-title">Проверить кошелёк</div>
+            <p class="text-muted">Остаток бонусов и сервисный сбор 25 ₴ всегда под рукой.</p>
+          </a>
+          <a class="card shadowed" href="passenger-orders.html">
+            <div class="badge badge--muted">Маршруты</div>
+            <div class="section-title">Управлять заказами</div>
+            <p class="text-muted">Подтверждайте посадку, просматривайте квитанции и отзывы.</p>
+          </a>
+          <a class="card shadowed" href="passenger-support.html">
+            <div class="badge badge--muted">Поддержка</div>
+            <div class="section-title">Связаться с оператором</div>
+            <p class="text-muted">Круглосуточно поможем с оплатой и маршрутом.</p>
+          </a>
+          <a class="card shadowed" href="passenger-settings.html">
+            <div class="badge badge--muted">Профиль</div>
+            <div class="section-title">Настройки</div>
+            <p class="text-muted">Обновите контакты, предпочтения и способы оплаты.</p>
+          </a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="bottom-nav__link" href="passenger-home.html" aria-current="page">
+      <span class="bottom-nav__icon" aria-hidden="true">🏠</span>
+      <span class="bottom-nav__label">Главная</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-orders.html">
+      <span class="bottom-nav__icon" aria-hidden="true">🧾</span>
+      <span class="bottom-nav__label">Заказы</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-wallet.html">
+      <span class="bottom-nav__icon" aria-hidden="true">💳</span>
+      <span class="bottom-nav__label">Кошелёк</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-settings.html">
+      <span class="bottom-nav__icon" aria-hidden="true">⚙️</span>
+      <span class="bottom-nav__label">Настройки</span>
+    </a>
+  </nav>
+
+  <script src="ui.js"></script>
+</body>
+</html>

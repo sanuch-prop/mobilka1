@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Поддержка — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <article class="page-card">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Служба поддержки</h1>
+        <p class="page-subtitle">Мы на связи 24/7 — выберите удобный способ</p>
+      </header>
+
+      <section class="panel panel--surface">
+        <h2 class="section-title">Быстрые контакты</h2>
+        <div class="button-group button-group--vertical">
+          <a class="button button--primary" href="tel:+380800123456">Позвонить • +380 800 123 456</a>
+          <a class="button button--ghost" href="mailto:support@ridenow.app">Написать на support@ridenow.app</a>
+          <a class="button button--ghost" href="https://t.me/ridenow_support">Чат в Telegram</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Частые вопросы</h2>
+        <div class="list list--borderless">
+          <div class="list-item__body">
+            <div class="section-title">Как вернуть сервисный сбор?</div>
+            <p class="text-muted">Если поездка отменена водителем, сбор 25 ₴ автоматически вернётся в кошелёк.</p>
+          </div>
+          <div class="list-item__body">
+            <div class="section-title">Что делать, если водитель не приехал?</div>
+            <p class="text-muted">Сообщите в <a href="passenger-complaint.html">жалобу</a> — мы найдём замену в течение 15 минут.</p>
+          </div>
+          <div class="list-item__body">
+            <div class="section-title">Где найти квитанцию?</div>
+            <p class="text-muted">Откройте <a href="passenger-orders.html#completed">завершённые поездки</a> или раздел <a href="passenger-receipt.html?id=rn-9801">Квитанция</a>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Опишите ситуацию</h2>
+        <form class="form" id="supportForm" data-form="support" novalidate>
+          <div class="form-field">
+            <label class="form-label" for="supportTopic">Тема обращения</label>
+            <select class="input" id="supportTopic" required>
+              <option value="payment">Оплата</option>
+              <option value="driver">Водитель</option>
+              <option value="trip">Маршрут</option>
+              <option value="other">Другое</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="supportMessage">Сообщение</label>
+            <textarea id="supportMessage" required placeholder="Расскажите, что произошло"></textarea>
+          </div>
+          <div class="button-group">
+            <button class="button button--primary" type="submit">Отправить</button>
+            <a class="button button--ghost" href="passenger-home.html">На главную</a>
+          </div>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  <div class="toast" id="supportToast" role="status" aria-live="polite">Заявка отправлена. Ответим в течение 5 минут.</div>
+
+  <script src="ui.js"></script>
+</body>
+</html>
