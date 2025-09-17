@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Заказ RN-1024 — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <article class="page-card" id="orderCard">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Поездка Киев → Одесса</h1>
+        <p class="page-subtitle">16 сентября 2025 • 08:30 → 13:15 • 1 место</p>
+      </header>
+
+      <div id="trip"
+           data-trip-id="rn-1024"
+           data-depart-at="2025-09-16T05:30:00Z"
+           data-arrive-eta="2025-09-16T10:15:00Z"
+           data-completed-at=""
+           data-status="upcoming"></div>
+
+      <section class="panel panel--surface">
+        <h2 class="section-title">Информация о поездке</h2>
+        <div class="summary-list">
+          <div class="summary-list__item"><span>Сбор</span><strong>Киев, Дворец спорта</strong></div>
+          <div class="summary-list__item"><span>Прибытие</span><strong>Одесса, Привоз</strong></div>
+          <div class="summary-list__item"><span>Цена</span><strong>550 ₴ + сервисный сбор 25 ₴</strong></div>
+          <div class="summary-list__item"><span>Маршрут</span><strong>Через Белую Церковь и Умань</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Водитель и авто</h2>
+        <div class="summary-list">
+          <div class="summary-list__item"><span>Водитель</span><strong>Павел Остапчук</strong></div>
+          <div class="summary-list__item"><span>Рейтинг</span><strong>4.92 • 128 поездок</strong></div>
+          <div class="summary-list__item"><span>Автомобиль</span><strong>Toyota Camry 2018 • АХ 1023 НВ</strong></div>
+          <div class="summary-list__item"><span>Контакты</span><strong><a href="tel:+380671112233">+380 67 111 22 33</a></strong></div>
+        </div>
+        <div class="panel__footer">
+          <a class="button button--ghost" href="tel:+380671112233">Позвонить</a>
+          <a class="button button--ghost" href="mailto:pavel@ridenow.app">Написать</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">План поездки</h2>
+        <div class="timeline">
+          <div class="timeline__item">
+            <strong>08:15</strong>
+            <div class="text-muted">Сбор пассажиров, проверка документов</div>
+          </div>
+          <div class="timeline__item">
+            <strong>08:30</strong>
+            <div class="text-muted">Выезд из Киева, остановка на АЗС WOG (при необходимости)</div>
+          </div>
+          <div class="timeline__item">
+            <strong>10:40</strong>
+            <div class="text-muted">Перерыв в Умани (10 минут)</div>
+          </div>
+          <div class="timeline__item">
+            <strong>13:15</strong>
+            <div class="text-muted">Прибытие в Одессу, Привоз</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel hidden js-board-prompt" id="boardingPrompt">
+        <h2 class="section-title">Вы сели в авто?</h2>
+        <p class="text-muted">Прошло 30 минут после плановой посадки. Подтвердите статус, чтобы водитель знал, что всё в порядке.</p>
+        <div class="button-group">
+          <button class="button button--primary button--pill" type="button" data-action="board-yes">Да, я в пути</button>
+          <button class="button button--ghost button--pill" type="button" data-action="board-no">Нет, возникла проблема</button>
+        </div>
+      </section>
+
+      <section class="panel hidden js-receipt-reminder" id="receiptReminder">
+        <h2 class="section-title">Квитанция доступна заранее</h2>
+        <p class="text-muted">Можно подготовить оплату наличными, чтобы не задерживать поездку.</p>
+        <a class="button button--primary button--pill" href="passenger-receipt.html?id=rn-1024">Открыть квитанцию</a>
+      </section>
+
+      <section class="panel hidden js-post-actions" id="postActions">
+        <h2 class="section-title">Что дальше?</h2>
+        <p class="text-muted">Поездка завершена. Выберите дальнейшее действие.</p>
+        <div class="button-group">
+          <a class="button button--primary button--pill" href="passenger-review.html?id=rn-1024">Оставить отзыв</a>
+          <a class="button button--ghost button--pill" href="passenger-complaint.html?id=rn-1024">Пожаловаться</a>
+          <a class="button button--ghost button--pill" href="passenger-receipt.html?id=rn-1024">Квитанция</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <div class="modal" id="issueModal" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="issueTitle">
+      <h2 class="section-title" id="issueTitle">Что случилось?</h2>
+      <form class="form" id="issueForm">
+        <div class="form-field">
+          <label class="form-label" for="issueReason">Причина</label>
+          <select class="input" id="issueReason" required>
+            <option value="driver">Не нашёл водителя</option>
+            <option value="delay">Водитель опаздывает</option>
+            <option value="change">Изменились планы</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="issueComment">Комментарий</label>
+          <textarea id="issueComment" placeholder="Опишите ситуацию"></textarea>
+        </div>
+        <div class="modal__actions">
+          <button class="button button--ghost" type="button" data-action="close-issue">Отмена</button>
+          <button class="button button--primary" type="submit">Отправить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="tripToast" role="status" aria-live="polite"></div>
+
+  <script src="js/trip-logic.js" defer></script>
+</body>
+</html>

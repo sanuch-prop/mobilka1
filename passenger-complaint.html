@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Жалоба на поездку — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <article class="page-card" id="complaintCard">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Сообщить о проблеме</h1>
+        <p class="page-subtitle" id="complaintSubtitle">Выберите поездку</p>
+      </header>
+
+      <section class="panel" id="complaintList">
+        <h2 class="section-title">Завершённые поездки</h2>
+        <div class="list" id="complaintTrips"></div>
+        <p class="text-muted text-small">Выберите поездку, для которой хотите оставить жалобу.</p>
+      </section>
+
+      <section class="panel hidden" id="complaintFormWrap">
+        <h2 class="section-title">Жалоба на поездку</h2>
+        <p class="text-muted" id="complaintTripInfo">Поездка Одесса → Черновцы</p>
+        <form class="form" id="complaintForm">
+          <div class="form-field">
+            <span class="form-label">Что произошло?</span>
+            <div class="radio-group">
+              <label class="radio-option" for="reason-delay">
+                <input type="radio" id="reason-delay" name="reason" value="delay" required />
+                <span>Водитель опоздал или не приехал</span>
+              </label>
+              <label class="radio-option" for="reason-payment">
+                <input type="radio" id="reason-payment" name="reason" value="payment" />
+                <span>Проблема с оплатой</span>
+              </label>
+              <label class="radio-option" for="reason-safety">
+                <input type="radio" id="reason-safety" name="reason" value="safety" />
+                <span>Нарушение безопасности</span>
+              </label>
+              <label class="radio-option" for="reason-other">
+                <input type="radio" id="reason-other" name="reason" value="other" />
+                <span>Другое</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="complaintComment">Комментарий</label>
+            <textarea id="complaintComment" placeholder="Опишите ситуацию"></textarea>
+          </div>
+          <div class="button-group">
+            <button class="button button--primary" type="submit">Отправить</button>
+            <a class="button button--ghost" href="passenger-orders.html#completed">Отменить</a>
+          </div>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  <div class="toast" id="complaintToast" role="status" aria-live="polite">Спасибо! Мы свяжемся с вами в течение 15 минут.</div>
+
+  <script>
+    const trips = [
+      { id: 'rn-9801', title: 'Одесса → Черновцы', date: '08.09.2025', driver: 'Ирина' },
+      { id: 'rn-9722', title: 'Киев → Днепр', date: '02.09.2025', driver: 'Андрей' },
+      { id: 'rn-1024', title: 'Киев → Одесса', date: '16.09.2025', driver: 'Павел' }
+    ];
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id') ? params.get('id').toLowerCase() : '';
+
+    const listWrap = document.getElementById('complaintList');
+    const list = document.getElementById('complaintTrips');
+    const formWrap = document.getElementById('complaintFormWrap');
+    const subtitle = document.getElementById('complaintSubtitle');
+    const tripInfo = document.getElementById('complaintTripInfo');
+
+    list.innerHTML = trips.map(trip => `
+      <div class="list-item">
+        <div class="list-item__body">
+          <div class="list-item__title">${trip.title}</div>
+          <div class="list-item__meta">${trip.date} • Водитель ${trip.driver}</div>
+        </div>
+        <div class="list-item__actions">
+          <a class="button button--ghost button--pill" href="passenger-complaint.html?id=${trip.id}">Выбрать</a>
+        </div>
+      </div>
+    `).join('');
+
+    const currentTrip = trips.find(trip => trip.id === id);
+    if (currentTrip) {
+      listWrap.classList.add('hidden');
+      formWrap.classList.remove('hidden');
+      subtitle.textContent = `Жалоба на поездку ${currentTrip.title}`;
+      tripInfo.textContent = `${currentTrip.title} • ${currentTrip.date} • ${currentTrip.driver}`;
+    }
+
+    const toast = document.getElementById('complaintToast');
+    const form = document.getElementById('complaintForm');
+    if (form) {
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        toast.classList.add('is-visible');
+        setTimeout(() => {
+          toast.classList.remove('is-visible');
+          location.href = 'passenger-orders.html#completed';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

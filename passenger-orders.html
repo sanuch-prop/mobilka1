@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Мои поездки — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="has-bottom-nav">
+  <main class="page-shell">
+    <article class="page-card">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Мои поездки</h1>
+        <p class="page-subtitle">Управляйте активными и завершёнными поездками в одном месте</p>
+      </header>
+
+      <section class="panel panel--surface">
+        <div class="tabs" role="tablist">
+          <button class="tabs__button" data-tab="active" aria-selected="true" type="button">Активные</button>
+          <button class="tabs__button" data-tab="completed" aria-selected="false" type="button">Завершённые</button>
+        </div>
+
+        <div class="space-top" data-panel="active">
+          <ul class="list">
+            <li class="list-item">
+              <div class="list-item__body">
+                <div class="list-item__title">Киев → Одесса</div>
+                <div class="list-item__meta">16 сентября • 08:30 → 13:15 • 1 место</div>
+                <div class="tag-list">
+                  <span class="tag">Статус: ожидает подтверждения</span>
+                  <span class="tag">550 ₴</span>
+                </div>
+              </div>
+              <div class="list-item__actions">
+                <a class="button button--primary button--pill" href="passenger-order-details.html?id=rn-1024">Детали</a>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-item__body">
+                <div class="list-item__title">Львов → Варшава</div>
+                <div class="list-item__meta">18 сентября • 07:10 → 13:40 • 2 места</div>
+                <div class="tag-list">
+                  <span class="tag">Статус: подтверждено</span>
+                  <span class="tag">980 ₴</span>
+                </div>
+              </div>
+              <div class="list-item__actions">
+                <a class="button button--primary button--pill" href="passenger-order-details.html?id=rn-2043">Детали</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-top hidden" data-panel="completed">
+          <ul class="list">
+            <li class="list-item">
+              <div class="list-item__body">
+                <div class="list-item__title">Одесса → Черновцы</div>
+                <div class="list-item__meta">08 сентября • 07:45 → 12:30 • Toyota RAV4</div>
+                <div class="tag-list">
+                  <span class="tag">Оплата водителю: 600 ₴</span>
+                  <span class="tag">Сервисный сбор 25 ₴</span>
+                </div>
+              </div>
+              <div class="list-item__actions">
+                <a class="button button--ghost button--pill" href="passenger-review.html?id=rn-9801">Отзыв</a>
+                <a class="button button--ghost button--pill" href="passenger-complaint.html?id=rn-9801">Жалоба</a>
+                <a class="button button--primary button--pill" href="passenger-receipt.html?id=rn-9801">Квитанция</a>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="list-item__body">
+                <div class="list-item__title">Киев → Днепр</div>
+                <div class="list-item__meta">02 сентября • 09:20 → 14:05 • Volkswagen Passat</div>
+                <div class="tag-list">
+                  <span class="tag">Оплачено наличными</span>
+                  <span class="tag">470 ₴</span>
+                </div>
+              </div>
+              <div class="list-item__actions">
+                <a class="button button--ghost button--pill" href="passenger-review.html?id=rn-9722">Отзыв</a>
+                <a class="button button--ghost button--pill" href="passenger-complaint.html?id=rn-9722">Жалоба</a>
+                <a class="button button--primary button--pill" href="passenger-receipt.html?id=rn-9722">Квитанция</a>
+              </div>
+            </li>
+          </ul>
+          <p class="text-muted text-small space-top">Завершённые поездки доступны 90 дней, квитанции сохраняются в кошельке.</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Подсказки</h2>
+        <div class="list list--borderless">
+          <div class="list-item__body">
+            <div class="section-title">Поделиться поездкой</div>
+            <p class="text-muted">Ссылка появится в деталях поездки после подтверждения.</p>
+          </div>
+          <div class="list-item__body">
+            <div class="section-title">Нужна помощь?</div>
+            <p class="text-muted">Напишите в <a href="passenger-support.html">службу поддержки</a>, мы ответим в течение 5 минут.</p>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <a class="bottom-nav__link" href="passenger-home.html">
+      <span class="bottom-nav__icon" aria-hidden="true">🏠</span>
+      <span class="bottom-nav__label">Главная</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-orders.html" aria-current="page">
+      <span class="bottom-nav__icon" aria-hidden="true">🧾</span>
+      <span class="bottom-nav__label">Заказы</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-wallet.html">
+      <span class="bottom-nav__icon" aria-hidden="true">💳</span>
+      <span class="bottom-nav__label">Кошелёк</span>
+    </a>
+    <a class="bottom-nav__link" href="passenger-settings.html">
+      <span class="bottom-nav__icon" aria-hidden="true">⚙️</span>
+      <span class="bottom-nav__label">Настройки</span>
+    </a>
+  </nav>
+
+  <script>
+    const tabButtons = Array.from(document.querySelectorAll('[data-tab]'));
+    const panels = Array.from(document.querySelectorAll('[data-panel]'));
+
+    function setActive(tab) {
+      tabButtons.forEach(btn => btn.setAttribute('aria-selected', String(btn === tab)));
+      panels.forEach(panel => {
+        if (panel.getAttribute('data-panel') === tab.dataset.tab) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        setActive(button);
+        if (button.dataset.tab === 'completed') {
+          history.replaceState(null, '', '#completed');
+        } else {
+          history.replaceState(null, '', '#active');
+        }
+      });
+    });
+
+    function openFromHash() {
+      const hash = location.hash.replace('#', '');
+      const target = tabButtons.find(btn => btn.dataset.tab === hash);
+      if (target) {
+        setActive(target);
+      } else {
+        setActive(tabButtons[0]);
+      }
+    }
+
+    window.addEventListener('hashchange', openFromHash);
+    openFromHash();
+  </script>
+</body>
+</html>

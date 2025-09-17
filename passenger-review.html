@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Отзыв о поездке — RideNow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <article class="page-card">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span>RideNow</span>
+        </div>
+        <h1 class="page-title">Оставить отзыв</h1>
+        <p class="page-subtitle" id="reviewSubtitle">Поездка Одесса → Черновцы</p>
+      </header>
+
+      <form class="form" id="reviewForm">
+        <div class="form-field">
+          <span class="form-label">Оценка поездки</span>
+          <div class="rating" role="radiogroup">
+            <input type="radio" id="star5" name="rating" value="5" checked />
+            <label for="star5" aria-label="5">★</label>
+            <input type="radio" id="star4" name="rating" value="4" />
+            <label for="star4" aria-label="4">★</label>
+            <input type="radio" id="star3" name="rating" value="3" />
+            <label for="star3" aria-label="3">★</label>
+            <input type="radio" id="star2" name="rating" value="2" />
+            <label for="star2" aria-label="2">★</label>
+            <input type="radio" id="star1" name="rating" value="1" />
+            <label for="star1" aria-label="1">★</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="reviewText">Комментарий</label>
+          <textarea id="reviewText" placeholder="Что понравилось, что можно улучшить?"></textarea>
+        </div>
+        <div class="button-group">
+          <button class="button button--primary" type="submit">Отправить</button>
+          <a class="button button--ghost" href="passenger-orders.html#completed">Сделать позже</a>
+        </div>
+      </form>
+    </article>
+  </main>
+
+  <div class="toast" id="reviewToast" role="status" aria-live="polite">Спасибо! Отзыв отправлен.</div>
+
+  <script>
+    const titles = {
+      'rn-9801': 'Поездка Одесса → Черновцы',
+      'rn-9722': 'Поездка Киев → Днепр',
+      'rn-1024': 'Поездка Киев → Одесса'
+    };
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id') ? params.get('id').toLowerCase() : 'rn-9801';
+    document.getElementById('reviewSubtitle').textContent = titles[id] || titles['rn-9801'];
+
+    const toast = document.getElementById('reviewToast');
+    const form = document.getElementById('reviewForm');
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      toast.classList.add('is-visible');
+      setTimeout(() => {
+        toast.classList.remove('is-visible');
+        location.href = 'passenger-orders.html#completed';
+      }, 1600);
+    });
+  </script>
+</body>
+</html>
